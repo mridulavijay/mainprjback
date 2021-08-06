@@ -10,12 +10,13 @@ app.use(cors());
 var approved=new Boolean();
 app.use(express.urlencoded({extended:true}));
 const PORT=process.env.PORT||3000;
+app.use(express.static('./public'));
 const Userdata=require('./src/model/Userdata');
 const Trainerdata=require('./src/model/Trainerdata');
 const storage = multer.diskStorage({
     
   destination : function(req, file, cb) {
-      cb(null,path.join(__dirname,'../','Frontend/src/assets/img'));},
+      cb(null,__dirname+'/public/images');},
      
 
   // By default, multer removes file extensions so let's add them back
@@ -137,21 +138,7 @@ app.post('/signup',function(req,res){
 
    });
     
-   function verifyToken(req, res, next) {
-    if(!req.headers.authorization) {
-      return res.status(401).send('Unauthorized request')
-    }
-    let token = req.headers.authorization.split(' ')[1]
-    if(token === 'null') {
-      return res.status(401).send('Unauthorized request')    
-    }
-    let payload = jwt.verify(token, 'secretKey')
-    if(!payload) {
-      return res.status(401).send('Unauthorized request')    
-    }
-    req.userId = payload.subject
-    next()
-  }
+  
 
 
 

@@ -63,7 +63,7 @@ function router(tokverify,storage){
                       company:req.body.company,
                      designation:req.body.designation,
                       ictakcourses:coursedata,
-                        photo:req.file.filename,
+                        photo:'/api/images/'+req.file.filename,
                      ID:id_final,
                      approved:false,
                      employment:''
